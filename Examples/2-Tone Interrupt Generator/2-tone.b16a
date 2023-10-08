@@ -9,16 +9,19 @@
 ; Requires system to have two timers and port 0 out installed.
 ; Does not require PWM registers to output.
 ; Configure Registers
-<reset>						
-set	tr0	226				; Set Timer 0 to reset 226 clocks after timer reset 
-set	tr1	181				; Set Timer 1 to reset 181 clocks after timer reset
-set	ija	<handler>			; Set the address to jump to when an interrupt is called
-set	tir	0b11				; Enable interrupts in timer interrupt handler
+<reset>		
+set	tv0	0o0					; Set timer values
+set	tv1	0x1				
+set	tr0	226					; Set Timer 0 to reset 226 clocks after timer reset 
+set	tr1	181					; Set Timer 1 to reset 181 clocks after timer reset
+set	tcf	0b11					; Enable interrupts on timers 0, 1
+set	ija	<handler>				; Set the address to jump to when an interrupt is called
+set	tir	0b11					; Enable interrupts in timer interrupt handler
 
 
 ;; Main Loop
 <main>
-	jg	gr0	zro	<then0>
+	jz	gr0	<then0>
 		cp	zro	po0			; Set port low
 		jmp <main>
 	<then0>
@@ -33,6 +36,3 @@ set	tir	0b11				; Enable interrupts in timer interrupt handler
 	addi	gr0	10				; Add 10 pulses to the countdown register
 	icl						; Clear interrupts
 	jmp	sp					; Jump to the address originally stored in stack
-
-
-
