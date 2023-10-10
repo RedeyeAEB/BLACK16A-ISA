@@ -158,7 +158,7 @@ def main():
         lines[i] = remove_carriage_return(lines[i])
         lines[i] = re.sub("[\t ]{2,}", " ", lines[i])
         lines[i] = lines[i].strip()
-        lines[i] = re.sub('[^a-zA-Z0-9<> \n\.]', ' ', lines[i])
+        lines[i] = re.sub('[^a-zA-Z0-9<>\[\] \n\.]', ' ', lines[i])
         i = i + 1
 
     # Set 4: Convert to token arrays
@@ -166,7 +166,17 @@ def main():
     for l in lines:
         tokens.append(l.split(" "))
 
-    # Step 5: Look for <> address placeholders, note line in dictionary, and remove from parsed system
+    # Step 5a: Look for [] preprocessor variable placeholders, note following value in dictionary, and remove from parsed system
+    sub_dict = {}
+    i = 0
+    while i < len(tokens):
+        if "[" == tokens[i][0][0]:
+            sub_dict[tokens[i][0]] = tokens[i][1]
+            tokens.pop(i)
+        else:
+            i = i + 1
+
+    # Step 5b: Look for <> address placeholders, note line in dictionary, and remove from parsed system
     jump_dict = {}
     i = 0
     while i < len(tokens):
@@ -188,6 +198,9 @@ def main():
 
         # Process any remaining tokens:
         for t in l:
+            # Variable to final token for hex conversion
+            while "[" in t: # Allows for var to be defined as another var until a final value is reached
+                t = sub_dict[t]
             if "<" in t:
                 s = hex(int(jump_dict[t]))[2:]
                 while len(s) < 4:
