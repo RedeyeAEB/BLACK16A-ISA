@@ -9,17 +9,22 @@
 ; Requires system to have two timers and port 0 out installed.
 ; Does not require PWM registers to output.
 ; Configure Registers
+
+[tim1rst]	226
+[tim2rst]	181
+
+
 <reset>		
 set	tv0	0o0					; Set timer values
 set	tv1	0x1				
-set	tr0	226					; Set Timer 0 to reset 226 clocks after timer reset 
-set	tr1	181					; Set Timer 1 to reset 181 clocks after timer reset
+set	tr0	[tim1rst]				; Set Timer 0 to reset 226 clocks after timer reset 
+set	tr1	[tim2rst]				; Set Timer 1 to reset 181 clocks after timer reset
 set	tcf	0b11					; Enable interrupts on timers 0, 1
 set	ija	<handler>				; Set the address to jump to when an interrupt is called
 set	tir	0b11					; Enable interrupts in timer interrupt handler
 
 
-;; Main Loop
+; Main Loop
 <main>
 	jz	gr0	<then0>
 		cp	zro	po0			; Set port low
