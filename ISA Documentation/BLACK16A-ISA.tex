@@ -1,0 +1,91 @@
+\documentclass[12pt, twoside]{article}
+\usepackage[margin=1cm, footskip=0cm, top=0.25cm, headsep=0pt]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fontspec} 
+\setmainfont{Futura}
+\usepackage{parskip}
+\setlength{\parindent}{20pt}
+\setlength{\parskip}{5pt}
+\usepackage{setspace}
+\linespread{0.75}
+
+\begin{document}
+\raggedbottom
+
+
+\vspace*{\fill}
+
+\begin{figure}[H]
+	\hspace{-0.5in}{\includegraphics{logobar.png}}
+\end{figure}
+
+\noindent{\fontsize{50}{60} \selectfont{BLACK16A/VN32}}
+
+\noindent\Huge{ARCHITECTURAL REFERENCE MANUAL}
+
+\noindent\Large{REVISION 2023.11.07}
+
+\vspace*{\fill}
+
+
+
+\newpage
+
+\begin{figure}[H]
+	\hspace{-0.5in}{\includegraphics{topbar.png}}
+\end{figure}
+
+
+
+\noindent\Huge{Table of Contents}
+
+\noindent\Huge{List of Figures}
+
+\noindent\Huge{List of Tables}
+
+
+
+\newpage
+
+\begin{figure}[H]
+	\hspace{-0.5in}{\includegraphics{topbar.png}}
+\end{figure}
+
+
+\noindent\Huge Architectural Overview
+
+\noindent\Huge Functional Description
+
+\noindent\Huge Instruction Set
+
+\noindent\Large BLACK16A Base
+
+\noindent\Large VN32 Extennsion
+
+\noindent\Large Operations
+ 
+\vspace{-8mm}\paragraph{\indent Architecture operations are generally listed in blocks of 16 below. This is not a hard rule and is designed to add some extra padding for extra modification in possible future architecture revisions.}
+
+\normalsize\begin{tabular}{l}
+	BLOCK 0xH: Program Flow/Memory Management \\
+	BLOCK 1xH: Branching Logic\\
+	BLOCK 2xH: Arithmetic/Logic \\
+	BLOCK 3xH: RESERVED FOR FUTURE EXPANSION 
+\end{tabular}\vspace{0 mm}
+
+
+\paragraph{\indent Operations 40H to FFH are not specified in this specification and may be used by hardware designers for whatever they wish. CAN, I2C, DMA, ADC, and integrated graphics are just some of the items that one may want to attach to the system core, and the included operation space may be useful for the level of integration the designer wishes.}
+
+\vspace{-3mm}
+
+\paragraph{\indent All instructions have a layout encoded by the data that it requires. All instructions require the “O” instruction byte, “B” signifies the use of a byte, and “W” the use of a word in the instruction layout. Various commands will require different arguments, and this signifies what an instruction requires to operate.}
+
+\vspace{-3mm}
+
+\paragraph{\indent It is important to note that not all instructions are 32-bits, and a hardware implementer may wish to format the memory to not waste this space. Considerations are made specifically for possible variable-length implementations, but all supporting documentation assumes fixed-length for simplicity.}
+
+\vspace{-3mm}
+
+\end{document}
+
